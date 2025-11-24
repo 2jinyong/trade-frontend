@@ -1,0 +1,61 @@
+.home-wrap {
+  padding-top: 28px;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* 카드 전체 */
+.home-card {
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  transition: 0.2s;
+}
+
+.home-card:hover {
+  border-color: #03c75a !important;
+}
+
+/* 이미지 박스 */
+.card-img-box {
+  height: 160px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img-box img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.no-image {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* 텍스트 */
+.card-title {
+  font-size: 16px !important;
+  margin-bottom: 6px;
+}
+
+.price {
+  color: #03c75a;
+  font-weight: 600;
+}
+
+.writer {
+  font-size: 13px;
+  color: #777;
+}

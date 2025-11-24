@@ -1,49 +1,96 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import { useEffect,useState } from "react";
+import { Container, Button, Row, Col, Card } from "react-bootstrap";
+import "../css/Home.css";
 
 const Home = ({ isLogin, setIsLogin }) => {
-  const [posts,setPosts] = useState([]);
-  useEffect(()=> {
-    // list();
-  },[])
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
-  const list = async () =>{
-    try{
-      await axios.get("api/posts");
-      setPosts(Response.data);
-    }catch(err){
-      alert("상품목록 로딩실패");
-    }
-  };
+  function getThumbnail(content) {
+  const match = content?.match(/<img[^>]*src="([^"]*)"/);
+  return match ? match[1] : null;
+}
+
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get("/api/posts");
+        setPosts(res.data);
+      } catch (err) {
+        console.log("게시글 불러오기 실패:", err);
+      }
+    };
+    fetchPosts();
+
+  }, []);
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/logout"); // ✅ 서버에서 쿠키 삭제
-      setIsLogin(false);               // ✅ 상태 초기화
-      alert("로그아웃 완료");
+      await axios.post("/api/logout");
+      setIsLogin(false);
+      navigate("/");
     } catch (err) {
       alert("로그아웃 실패");
     }
   };
 
-  const create = () =>{
-    <Link to={"/post/create"}></Link>
-  }
-
   return (
-    <div>
-      <Link to="/"><h1>메인페이지</h1></Link>
-      {isLogin && <button onClick={create}>글 등록하기</button>}
-      {isLogin ? (
-        <button onClick={handleLogout}>로그아웃</button>
-      ) : (
-        <Link to="/login">로그인</Link>
-      )}
-      <h1>상품목록</h1>
-      
-    </div>
+    <Container className="home-wrap">
+
+      <div className="home-header">
+        <h2>중고거래</h2>
+        <div className="home-buttons">
+          {isLogin && (
+            <Button variant="success" onClick={() => navigate("/post/create")}>
+              글쓰기
+            </Button>
+          )}
+
+          {isLogin ? (
+            <Button variant="outline-secondary" onClick={handleLogout}>
+              로그아웃
+            </Button>
+          ) : (
+            <Link to="/login" className="btn btn-outline-secondary">
+              로그인
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <h3 className="mt-5 mb-4">최근 등록된 글</h3>
+
+      <Row>
+        {posts.map((post) => (
+          <Col key={post.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+            <Card onClick={() => navigate(`/posts/${post.id}`)} className="home-card">  
+
+              <div className="card-img-box">
+                {getThumbnail(post.content) ? (
+                  <Card.Img
+                    variant="top"
+                    src={getThumbnail(post.content)}
+                  />
+                ) : (
+                  <div className="no-image">이미지 없음</div>
+                )}
+              </div>
+
+
+              <Card.Body>
+                <Card.Title className="card-title">{post.title}</Card.Title>
+                <Card.Text className="price">{post.price}원</Card.Text>
+                <Card.Text className="writer">{post.userId}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+
+    </Container>
   );
 };
 

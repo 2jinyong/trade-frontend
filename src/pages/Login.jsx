@@ -1,45 +1,54 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from '../api/axios';
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import axios from "../api/axios";
+import { Container, Form, Button } from "react-bootstrap";
 
-const Login = ({ setIsLogin }) => {
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({ isLogin, setIsLogin }) => {
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  if (isLogin) return <Navigate to="/" replace />;
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/login', { userId, password });
-      alert(res.data); // "로그인 성공"
-      setIsLogin(true); // ✅ 로그인 상태 true
-      navigate("/");    // ✅ 메인페이지로 리디렉트
+      await axios.post("/api/login", { userId, password });
+      setIsLogin(true);
+      navigate("/");
     } catch (err) {
-      const msg = err.response?.data || '서버 오류!';
-      alert(msg);
+      alert("로그인 실패");
     }
   };
 
   return (
-    <div>
-      <Link to="/"><h1>메인페이지</h1></Link>
-      <form onSubmit={handleLogin}>
-        <input
+    <Container className="mt-5" style={{ maxWidth: "400px" }}>
+      <h2 className="mb-4">로그인</h2>
+
+      <Form onSubmit={handleLogin}>
+        <Form.Control
+          className="mb-3"
           type="text"
           placeholder="아이디"
-          required
           onChange={(e) => setUserId(e.target.value)}
-        /><br />
-        <input
+        />
+
+        <Form.Control
+          className="mb-3"
           type="password"
           placeholder="비밀번호"
-          required
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">로그인</button>
-      </form>
-      <Link to="/register">회원가입</Link>
-    </div>
+
+        <Button type="submit" variant="success" className="w-100">
+          로그인
+        </Button>
+      </Form>
+
+      <div className="mt-3">
+        <Link to="/register">회원가입</Link>
+      </div>
+    </Container>
   );
 };
 

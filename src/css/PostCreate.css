@@ -1,0 +1,18 @@
+.quill-editor .ql-editor {
+  min-height: 300px;
+  padding: 12px;
+}
+
+.ql-container {
+  height: auto !important;
+}
+
+.ql-editor {
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.quill-editor img {
+  max-width: 100%;
+  height: auto;
+}
