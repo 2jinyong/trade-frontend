@@ -84,6 +84,7 @@ const Home = ({ isLogin, setIsLogin }) => {
                 <Card.Title className="card-title">{post.title}</Card.Title>
                 <Card.Text className="price">{post.price}원</Card.Text>
                 <Card.Text className="writer">{post.userId}</Card.Text>
+                <Card.Text className="views">조회수{post.views}</Card.Text>
               </Card.Body>
             </Card>
           </Col>
