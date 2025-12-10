@@ -7,15 +7,38 @@ import Account from "./pages/Account";
 import PostCreate from "./pages/PostCreate";
 import axios from "./api/axios";
 import PostDetail from "./pages/PostDetail";
+import PostEdit from "./pages/PostEdit";
 
 function App() {
   const [isLogin, setIsLogin] = useState(null);
+  const [loginUserId, setLoginUserId] = useState(() => {
+    return localStorage.getItem("loginUserId") || null;
+  });
+
+  // loginUserId가 변경될 때 localStorage에 저장
+  useEffect(() => {
+    if (loginUserId) {
+      localStorage.setItem("loginUserId", loginUserId);
+    } else {
+      localStorage.removeItem("loginUserId");
+    }
+  }, [loginUserId]);
 
   useEffect(() => {
     axios
       .get("/api/auth/check")
-      .then((res) => setIsLogin(res.data.authenticated))
-      .catch(() => setIsLogin(false));
+      .then((res) => {
+        setIsLogin(res.data.authenticated);
+        if (res.data.userId) {
+          setLoginUserId(res.data.userId);
+        } else if (!res.data.authenticated) {
+          setLoginUserId(null);
+        }
+      })
+      .catch(() => {
+        setIsLogin(false);
+        setLoginUserId(null);
+      });
   }, []);
 
   if (isLogin === null) {
@@ -25,12 +48,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home isLogin={isLogin} setIsLogin={setIsLogin} />} />
+        <Route path="/" element={<Home isLogin={isLogin} setIsLogin={setIsLogin} setLoginUserId={setLoginUserId} />} />
 
         <Route
           path="/login"
           element={
-            isLogin ? <Navigate to="/" replace /> : <Login setIsLogin={setIsLogin} />
+            isLogin ? <Navigate to="/" replace /> : <Login setIsLogin={setIsLogin} setLoginUserId={setLoginUserId} />
           }
         />
 
@@ -48,9 +71,13 @@ function App() {
           path="/post/create"
           element={isLogin ? <PostCreate isLogin={isLogin} /> : <Navigate to="/login" replace />}
         />
-        <Route 
-        path="/posts/:id" 
-        element={isLogin ? <PostDetail isLogin={isLogin} /> : <Navigate to="/login" replace />}
+        <Route
+          path="/posts/:id"
+          element={isLogin ? <PostDetail loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/posts/edit/:id"
+          element={isLogin ? <PostEdit loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
         />
       </Routes>
     </BrowserRouter>

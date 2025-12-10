@@ -4,14 +4,25 @@ import axios from "../api/axios";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import "../css/Home.css";
 
-const Home = ({ isLogin, setIsLogin }) => {
+const Home = ({ isLogin, setIsLogin, setLoginUserId }) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
   function getThumbnail(content) {
-  const match = content?.match(/<img[^>]*src="([^"]*)"/);
-  return match ? match[1] : null;
-}
+    const match = content?.match(/<img[^>]*src="([^"]*)"/);
+    return match ? match[1] : null;
+  }
+
+  // 날짜 포맷팅 함수
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
+  }
 
 
   useEffect(() => {
@@ -31,6 +42,7 @@ const Home = ({ isLogin, setIsLogin }) => {
     try {
       await axios.post("/api/logout");
       setIsLogin(false);
+      setLoginUserId(null);  // 로그아웃 시 userId 초기화
       navigate("/");
     } catch (err) {
       alert("로그아웃 실패");
@@ -75,16 +87,20 @@ const Home = ({ isLogin, setIsLogin }) => {
                     src={getThumbnail(post.content)}
                   />
                 ) : (
-                  <div className="no-image">이미지 없음</div>
+                  <div className="no-image">
+                    <span className="no-image-icon">📷</span>
+                    <span className="no-image-text">등록된 이미지가 없습니다</span>
+                  </div>
                 )}
               </div>
 
 
               <Card.Body>
                 <Card.Title className="card-title">{post.title}</Card.Title>
-                <Card.Text className="price">{post.price}원</Card.Text>
+                <Card.Text className="price">{Number(post.price).toLocaleString()}원</Card.Text>
                 <Card.Text className="writer">{post.userId}</Card.Text>
                 <Card.Text className="views">조회수{post.views}</Card.Text>
+                <Card.Text className="createAt">{formatDate(post.createdAt)}</Card.Text>
               </Card.Body>
             </Card>
           </Col>

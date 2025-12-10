@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import { Container, Form, Button } from "react-bootstrap";
+import "../css/Register.css";
 
 const Register = () => {
   const [userId, setUserId] = useState("");
@@ -31,21 +32,21 @@ const Register = () => {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: "450px" }}>
-      <h2 className="mb-4">회원가입</h2>
+    <Container className="register-container">
+      <h2 className="register-title">회원가입</h2>
 
-      <Form onSubmit={handleRegister}>
-        <Form.Control className="mb-3" placeholder="아이디" onChange={(e)=>setUserId(e.target.value)} />
-        <Form.Control className="mb-3" type="password" placeholder="비밀번호" onChange={(e)=>setPassword(e.target.value)} />
-        <Form.Control className="mb-3" type="password" placeholder="비밀번호 확인" onChange={(e)=>setRePassword(e.target.value)} />
-        <Form.Control className="mb-3" placeholder="이름" onChange={(e)=>setName(e.target.value)} />
-        <Form.Control className="mb-3" placeholder="전화번호" onChange={(e)=>setTel(e.target.value)} />
-        <Form.Control className="mb-3" type="email" placeholder="이메일" onChange={(e)=>setEmail(e.target.value)} />
+      <Form onSubmit={handleRegister} className="register-form">
+        <Form.Control placeholder="아이디" onChange={(e) => setUserId(e.target.value)} />
+        <Form.Control type="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
+        <Form.Control type="password" placeholder="비밀번호 확인" onChange={(e) => setRePassword(e.target.value)} />
+        <Form.Control placeholder="이름" onChange={(e) => setName(e.target.value)} />
+        <Form.Control placeholder="전화번호" onChange={(e) => setTel(e.target.value)} />
+        <Form.Control type="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
 
-        <Button type="submit" variant="success" className="w-100">가입하기</Button>
+        <Button type="submit" variant="success" className="register-btn">가입하기</Button>
       </Form>
 
-      <div className="mt-3">
+      <div className="register-link">
         <Link to="/">메인으로</Link>
       </div>
     </Container>

@@ -1,0 +1,20 @@
+.register-container {
+  max-width: 450px;
+  margin-top: 3rem;
+}
+
+.register-title {
+  margin-bottom: 1.5rem;
+}
+
+.register-form .form-control {
+  margin-bottom: 1rem;
+}
+
+.register-btn {
+  width: 100%;
+}
+
+.register-link {
+  margin-top: 1rem;
+}

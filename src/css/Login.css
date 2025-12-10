@@ -1,0 +1,20 @@
+.login-container {
+  max-width: 400px;
+  margin-top: 3rem;
+}
+
+.login-title {
+  margin-bottom: 1.5rem;
+}
+
+.login-form .form-control {
+  margin-bottom: 1rem;
+}
+
+.login-btn {
+  width: 100%;
+}
+
+.login-link {
+  margin-top: 1rem;
+}

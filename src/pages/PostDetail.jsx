@@ -1,56 +1,174 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import "../css/PostDetail.css";
 
-const PostDetail = () => {
-  const { id } = useParams();              // URL에서 /posts/:id 받아옴
+export default function PostDetail({ loginUserId }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [post, setPost] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // 🍪 1) 쿠키 읽기
-  const getViewedCookie = () => {
-    const cookie = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("viewedPosts="));
-
-    return cookie ? JSON.parse(cookie.split("=")[1]) : {};
-  };
-
-  // 🍪 2) 쿠키 저장
-  const setViewedCookie = (data) => {
-    const expire = new Date();
-    expire.setHours(23, 59, 59, 999); // 오늘 밤까지 유지
-
-    document.cookie = `viewedPosts=${JSON.stringify(data)}; path=/; expires=${expire.toUTCString()}`;
-  };
-
-  // 🟩 상세 페이지 들어올 때 처리
-  useEffect(() => {
-    const viewed = getViewedCookie();
-
-    // 🔥 오늘 처음 보는 글이면 조회수 +1 API 호출
-    if (!viewed[id]) {
-      axios.post(`/api/posts/${id}/views`);
-      viewed[id] = true;
-      setViewedCookie(viewed);
+  // content에서 모든 이미지 추출
+  const getAllImages = (content) => {
+    const regex = /<img[^>]*src="([^"]*)"/g;
+    const images = [];
+    let match;
+    while ((match = regex.exec(content)) !== null) {
+      images.push(match[1]);
     }
+    return images;
+  };
 
-    // 🔥 상세 정보 불러오기
+  // content에서 이미지 태그 제거 (본문용)
+  const removeImages = (content) => {
+    return content?.replace(/<img[^>]*>/g, "") || "";
+  };
+
+  // 날짜 포맷팅 함수
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
+  };
+
+  useEffect(() => {
     axios.get(`/api/posts/${id}`).then((res) => setPost(res.data));
   }, [id]);
 
-  if (!post) return <div>로딩 중...</div>;
+  const handleDelete = async () => {
+    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      alert("삭제 완료");
+      navigate("/");
+    } catch (e) {
+      alert(e.response?.data || "삭제 실패");
+    }
+  };
+
+  if (!post) return <div className="loading">로딩 중...</div>;
 
   return (
-    <div style={{ maxWidth: "900px", margin: "30px auto" }}>
-      <h2>{post.title}</h2>
-      <p>조회수: {post.views}</p>
+    <div className="detail-page">
+      {/* 상단 네비게이션 */}
+      <div className="detail-header">
+        <div className="breadcrumb">
+          <span onClick={() => navigate("/")} className="breadcrumb-link">홈</span>
+          <span className="breadcrumb-separator">{">"}</span>
+          <span className="breadcrumb-current">게시글</span>
+        </div>
+        <button className="back-btn" onClick={() => navigate("/")}>
+          ← 목록으로
+        </button>
+      </div>
 
-      <div
-        dangerouslySetInnerHTML={{ __html: post.content }}
-        style={{ marginTop: "20px" }}
-      />
+      {/* 메인 컨텐츠 */}
+      <div className="detail-content">
+        {/* 좌측: 이미지 슬라이더 + 판매자 */}
+        <div className="image-area">
+          {(() => {
+            const images = getAllImages(post.content);
+            if (images.length > 0) {
+              return (
+                <div className="image-slider">
+                  <img src={images[currentImageIndex]} alt={`상품 이미지 ${currentImageIndex + 1}`} className="main-image" />
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        className="slider-btn slider-prev"
+                        onClick={() => setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1)}
+                      >
+                        ‹
+                      </button>
+                      <button
+                        className="slider-btn slider-next"
+                        onClick={() => setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1)}
+                      >
+                        ›
+                      </button>
+                      <div className="slider-dots">
+                        {images.map((_, idx) => (
+                          <span
+                            key={idx}
+                            className={`dot ${idx === currentImageIndex ? 'active' : ''}`}
+                            onClick={() => setCurrentImageIndex(idx)}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            } else {
+              return (
+                <div className="no-image-box">
+                  <span className="no-image-icon">📷</span>
+                  <span className="no-image-text">등록된 이미지가 없습니다</span>
+                </div>
+              );
+            }
+          })()}
+          <div className="seller-info">
+            <span className="seller-name">{post.userId}</span>
+          </div>
+        </div>
+
+        {/* 우측: 상품 정보 */}
+        <div className="info-area">
+          {/* 더보기 메뉴 */}
+          {loginUserId === post.userId && (
+            <div className="more-menu">
+              <button className="more-btn" onClick={() => setMenuOpen(!menuOpen)}>⋮</button>
+              {menuOpen && (
+                <div className="dropdown">
+                  <button onClick={() => navigate(`/posts/edit/${id}`)}>수정</button>
+                  <button onClick={handleDelete}>삭제</button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* 제목 */}
+          <h1 className="product-title">{post.title}</h1>
+
+          {/* 카테고리 · 등록일 */}
+          <div className="product-meta">
+            <span className="category">중고거래</span>
+            <span className="dot">·</span>
+            <span className="time">
+              {post.updatedAt && post.updatedAt !== post.createdAt
+                ? `${formatDate(post.updatedAt)} (수정됨)`
+                : formatDate(post.createdAt)
+              }
+            </span>
+          </div>
+
+          {/* 가격 */}
+          <div className="product-price">
+            {Number(post.price).toLocaleString()}원
+          </div>
+
+          {/* 상품 설명 */}
+          <div className="product-description" dangerouslySetInnerHTML={{ __html: removeImages(post.content) }} />
+
+          {/* 채팅 · 관심 · 조회 */}
+          <div className="product-stats">
+            <span>채팅 0</span>
+            <span className="dot">·</span>
+            <span>관심 0</span>
+            <span className="dot">·</span>
+            <span>조회 {post.views}</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
-};
-
-export default PostDetail;
+}
