@@ -1,6 +1,7 @@
 .register-container {
-  max-width: 450px;
-  margin-top: 3rem;
+  max-width: 360px !important;
+  margin: 3rem auto;
+  padding: 0 20px;
 }
 
 .register-title {

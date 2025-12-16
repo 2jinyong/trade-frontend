@@ -1,0 +1,117 @@
+.mypage-wrap {
+  padding-top: 28px;
+  max-width: 900px;
+}
+
+.back-btn {
+  margin-bottom: 20px;
+}
+
+.mypage-header {
+  margin-bottom: 24px;
+}
+
+.mypage-header h2 {
+  font-weight: 600;
+}
+
+.user-info-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #03c75a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.user-details h4 {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.user-details p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.no-posts {
+  color: #999;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.mypage-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mypage-card:hover {
+  border-color: #03c75a;
+}
+
+.mypage-card .card-img-box {
+  height: 140px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mypage-card .card-img-box img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mypage-card .no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+}
+
+.mypage-card .no-image-icon {
+  font-size: 32px;
+  opacity: 0.3;
+}
+
+.mypage-card .card-title {
+  font-size: 15px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mypage-card .price {
+  color: #03c75a;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.mypage-card .meta {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}

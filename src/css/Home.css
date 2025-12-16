@@ -79,3 +79,12 @@
 .views {
   font-size: 13px;
 }
+
+.welcome-msg {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  padding-right: 8px;
+}

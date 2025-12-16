@@ -10,6 +10,8 @@ export default function PostDetail({ loginUserId }) {
   const [post, setPost] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
 
   // content에서 모든 이미지 추출
   const getAllImages = (content) => {
@@ -39,7 +41,13 @@ export default function PostDetail({ loginUserId }) {
   };
 
   useEffect(() => {
+    // 게시글 조회
     axios.get(`/api/posts/${id}`).then((res) => setPost(res.data));
+    // 좋아요 상태 조회
+    axios.get(`/api/likes/${id}`).then((res) => {
+      setLiked(res.data.liked);
+      setLikeCount(res.data.likeCount);
+    }).catch(() => {});
   }, [id]);
 
   const handleDelete = async () => {
@@ -50,6 +58,21 @@ export default function PostDetail({ loginUserId }) {
       navigate("/");
     } catch (e) {
       alert(e.response?.data || "삭제 실패");
+    }
+  };
+
+  // 좋아요 토글
+  const handleLike = async () => {
+    if (!loginUserId) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    try {
+      const res = await axios.post(`/api/likes/${id}`);
+      setLiked(res.data.liked);
+      setLikeCount(res.data.likeCount);
+    } catch (e) {
+      alert("좋아요 실패");
     }
   };
 
@@ -158,11 +181,16 @@ export default function PostDetail({ loginUserId }) {
           {/* 상품 설명 */}
           <div className="product-description" dangerouslySetInnerHTML={{ __html: removeImages(post.content) }} />
 
+          {/* 좋아요 버튼 */}
+          <button className={`like-btn ${liked ? 'liked' : ''}`} onClick={handleLike}>
+            {liked ? "❤️" : "🤍"} 좋아요 {likeCount}
+          </button>
+
           {/* 채팅 · 관심 · 조회 */}
           <div className="product-stats">
             <span>채팅 0</span>
             <span className="dot">·</span>
-            <span>관심 0</span>
+            <span>좋아요 {likeCount}</span>
             <span className="dot">·</span>
             <span>조회 {post.views}</span>
           </div>

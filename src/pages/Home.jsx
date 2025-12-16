@@ -4,7 +4,7 @@ import axios from "../api/axios";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import "../css/Home.css";
 
-const Home = ({ isLogin, setIsLogin, setLoginUserId }) => {
+const Home = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName, displayName }) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
@@ -42,7 +42,8 @@ const Home = ({ isLogin, setIsLogin, setLoginUserId }) => {
     try {
       await axios.post("/api/logout");
       setIsLogin(false);
-      setLoginUserId(null);  // 로그아웃 시 userId 초기화
+      setLoginUserId(null);
+      setDisplayName(null);
       navigate("/");
     } catch (err) {
       alert("로그아웃 실패");
@@ -56,9 +57,15 @@ const Home = ({ isLogin, setIsLogin, setLoginUserId }) => {
         <h2>중고거래</h2>
         <div className="home-buttons">
           {isLogin && (
-            <Button variant="success" onClick={() => navigate("/post/create")}>
-              글쓰기
-            </Button>
+            <>
+              <span className="welcome-msg">{displayName}님 환영합니다</span>
+              <Button variant="outline-primary" onClick={() => navigate("/mypage")}>
+                내 정보
+              </Button>
+              <Button variant="success" onClick={() => navigate("/post/create")}>
+                글쓰기
+              </Button>
+            </>
           )}
 
           {isLogin ? (
@@ -99,7 +106,7 @@ const Home = ({ isLogin, setIsLogin, setLoginUserId }) => {
                 <Card.Title className="card-title">{post.title}</Card.Title>
                 <Card.Text className="price">{Number(post.price).toLocaleString()}원</Card.Text>
                 <Card.Text className="writer">{post.userId}</Card.Text>
-                <Card.Text className="views">조회수{post.views}</Card.Text>
+                <Card.Text className="views">조회수 {post.views} ❤️{post.likeCount}</Card.Text>
                 <Card.Text className="createAt">{formatDate(post.createdAt)}</Card.Text>
               </Card.Body>
             </Card>

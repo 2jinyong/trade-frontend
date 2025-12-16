@@ -4,7 +4,7 @@ import axios from "../api/axios";
 import { Container, Form, Button } from "react-bootstrap";
 import "../css/Login.css";
 
-const Login = ({ isLogin, setIsLogin, setLoginUserId }) => {
+const Login = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName }) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -16,7 +16,8 @@ const Login = ({ isLogin, setIsLogin, setLoginUserId }) => {
     try {
       await axios.post("/api/login", { userId, password });
       setIsLogin(true);
-      setLoginUserId(userId);  // 로그인한 userId 저장
+      setLoginUserId(userId);
+      setDisplayName(userId);  // 일반 로그인: userId를 표시
       navigate("/");
     } catch (err) {
       alert("로그인 실패");
@@ -44,6 +45,27 @@ const Login = ({ isLogin, setIsLogin, setLoginUserId }) => {
           로그인
         </Button>
       </Form>
+
+      <div className="social-divider">
+        <span>또는</span>
+      </div>
+
+      <div className="social-login">
+        <button
+          className="social-btn google-btn"
+          onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/google'}
+        >
+          <img src="https://www.google.com/favicon.ico" alt="Google" />
+          Google로 로그인
+        </button>
+        <button
+          className="social-btn naver-btn"
+          onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/naver'}
+        >
+          <img src="https://www.naver.com/favicon.ico" alt="Naver" />
+          네이버로 로그인
+        </button>
+      </div>
 
       <div className="login-link">
         <Link to="/register">회원가입</Link>
