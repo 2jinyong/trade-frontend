@@ -50,6 +50,13 @@ const Home = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName, displayName
     }
   };
 
+  // 소셜로그인 유저 아이디 포맷팅 (이메일 @ 뒷부분 제거)
+  const formatDisplayName = (name) => {
+    if (name && name.includes('@')) {
+      return name.split('@')[0];
+    }
+    return name;
+  };
   return (
     <Container className="home-wrap">
 
@@ -58,7 +65,7 @@ const Home = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName, displayName
         <div className="home-buttons">
           {isLogin && (
             <>
-              <span className="welcome-msg">{displayName}님 환영합니다</span>
+              <span className="welcome-msg">{formatDisplayName(displayName)}님 환영합니다</span>
               <Button variant="outline-primary" onClick={() => navigate("/mypage")}>
                 내 정보
               </Button>
@@ -105,8 +112,8 @@ const Home = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName, displayName
               <Card.Body>
                 <Card.Title className="card-title">{post.title}</Card.Title>
                 <Card.Text className="price">{Number(post.price).toLocaleString()}원</Card.Text>
-                <Card.Text className="writer">{post.userId}</Card.Text>
-                <Card.Text className="views">조회수 {post.views} ❤️{post.likeCount}</Card.Text>
+                <Card.Text className="writer">{formatDisplayName(post.userId)}</Card.Text>
+                <Card.Text className="views">조회수 {post.views} ❤️좋아요 {post.likeCount}</Card.Text>
                 <Card.Text className="createAt">{formatDate(post.createdAt)}</Card.Text>
               </Card.Body>
             </Card>

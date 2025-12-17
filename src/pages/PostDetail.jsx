@@ -40,6 +40,14 @@ export default function PostDetail({ loginUserId }) {
     return `${year}.${month}.${day} ${hours}:${minutes}`;
   };
 
+  // 소셜로그인 유저 아이디 포맷팅 (이메일 @ 뒷부분 제거)
+  const formatDisplayName = (name) => {
+    if (name && name.includes('@')) {
+      return name.split('@')[0];
+    }
+    return name;
+  };
+
   useEffect(() => {
     // 게시글 조회
     axios.get(`/api/posts/${id}`).then((res) => setPost(res.data));
@@ -139,7 +147,7 @@ export default function PostDetail({ loginUserId }) {
             }
           })()}
           <div className="seller-info">
-            <span className="seller-name">{post.userId}</span>
+            <span className="seller-name">{formatDisplayName(post.userId)}</span>
           </div>
         </div>
 
