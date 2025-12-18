@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import { Container, Form, Button } from "react-bootstrap";
-import "../css/Register.css";
+import "../css/Login.css";
 
 const Register = () => {
   const [userId, setUserId] = useState("");
@@ -32,24 +31,92 @@ const Register = () => {
   };
 
   return (
-    <Container className="register-container">
-      <h2 className="register-title">회원가입</h2>
-
-      <Form onSubmit={handleRegister} className="register-form">
-        <Form.Control placeholder="아이디" onChange={(e) => setUserId(e.target.value)} />
-        <Form.Control type="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
-        <Form.Control type="password" placeholder="비밀번호 확인" onChange={(e) => setRePassword(e.target.value)} />
-        <Form.Control placeholder="이름" onChange={(e) => setName(e.target.value)} />
-        <Form.Control placeholder="전화번호" onChange={(e) => setTel(e.target.value)} />
-        <Form.Control type="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
-
-        <Button type="submit" variant="success" className="register-btn">가입하기</Button>
-      </Form>
-
-      <div className="register-link">
-        <Link to="/">메인으로</Link>
+    <div className="auth-container">
+      {/* 로고 */}
+      <div className="auth-logo" onClick={() => navigate("/")}>
+        <div className="logo-icon">
+          <i className="fa-solid fa-handshake-angle"></i>
+        </div>
+        <span>중고마켓</span>
       </div>
-    </Container>
+
+      {/* 회원가입 박스 */}
+      <div className="auth-box">
+        <h1 className="auth-title">회원가입</h1>
+        <p className="auth-subtitle">중고마켓의 새로운 회원이 되어주세요</p>
+
+        <form onSubmit={handleRegister} className="auth-form">
+          <div className="input-group">
+            <i className="fa-regular fa-user"></i>
+            <input
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <i className="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <i className="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              placeholder="비밀번호를 다시 입력해주세요"
+              value={rePassword}
+              onChange={(e) => setRePassword(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <i className="fa-solid fa-signature"></i>
+            <input
+              type="text"
+              placeholder="이름을 입력해주세요"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <i className="fa-solid fa-phone"></i>
+            <input
+              type="tel"
+              placeholder="전화번호를 입력해주세요"
+              value={tel}
+              onChange={(e) => setTel(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <i className="fa-regular fa-envelope"></i>
+            <input
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <button type="submit" className="auth-btn">
+            가입하기
+          </button>
+        </form>
+
+        <div className="auth-footer">
+          <span>이미 계정이 있으신가요?</span>
+          <Link to="/login">로그인</Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

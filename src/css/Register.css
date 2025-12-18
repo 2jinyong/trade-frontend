@@ -1,21 +1,294 @@
+/* 회원가입 페이지 전체 */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 40px 20px;
+}
+
+/* 회원가입 카드 */
 .register-container {
-  max-width: 360px !important;
-  margin: 3rem auto;
-  padding: 0 20px;
+  width: 100%;
+  max-width: 420px !important;
+  margin: 0 auto;
+  padding: 0 !important;
+}
+
+.register-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #03c75a 0%, #00a648 50%, #06b6d4 100%);
+}
+
+/* 로고 영역 */
+.register-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.register-logo-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #03c75a 0%, #00a648 100%);
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(3, 199, 90, 0.25);
+}
+
+.register-logo-icon i {
+  font-size: 28px;
+  color: white;
 }
 
 .register-title {
-  margin-bottom: 1.5rem;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.register-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* 폼 스타일 */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
 }
 
 .register-form .form-control {
-  margin-bottom: 1rem;
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  background: #f9fafb;
+  margin-bottom: 0;
 }
 
+.register-form .form-control:focus {
+  outline: none;
+  border-color: #03c75a;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(3, 199, 90, 0.1);
+}
+
+.register-form .form-control::placeholder {
+  color: #9ca3af;
+}
+
+/* 에러 상태 */
+.register-form .form-control.is-invalid {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.register-form .form-control.is-invalid:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.invalid-feedback {
+  display: block;
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+/* 회원가입 버튼 */
 .register-btn {
   width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #03c75a 0%, #00a648 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(3, 199, 90, 0.3);
+  margin-top: 8px;
 }
 
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(3, 199, 90, 0.4);
+}
+
+.register-btn:active {
+  transform: translateY(0);
+}
+
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 구분선 */
+.register-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.register-divider::before,
+.register-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.register-divider span {
+  padding: 0 16px;
+}
+
+/* 로그인 링크 */
 .register-link {
-  margin-top: 1rem;
+  text-align: center;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.register-link p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #03c75a;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 4px;
+  transition: color 0.2s;
+}
+
+.register-link a:hover {
+  color: #00a648;
+  text-decoration: underline;
+}
+
+/* 비밀번호 강도 표시 */
+.password-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+
+.strength-bar.weak {
+  background: #ef4444;
+}
+
+.strength-bar.medium {
+  background: #f59e0b;
+}
+
+.strength-bar.strong {
+  background: #03c75a;
+}
+
+/* 체크박스 스타일 */
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #03c75a;
+  cursor: pointer;
+}
+
+.form-check-label {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.form-check-label a {
+  color: #03c75a;
+  text-decoration: none;
+}
+
+.form-check-label a:hover {
+  text-decoration: underline;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .register-page {
+    padding: 20px 16px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .register-card {
+    padding: 36px 24px;
+    border-radius: 20px;
+  }
+
+  .register-title {
+    font-size: 22px;
+  }
+
+  .register-logo-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .register-logo-icon span {
+    font-size: 28px;
+  }
 }

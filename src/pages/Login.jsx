@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import { Container, Form, Button } from "react-bootstrap";
 import "../css/Login.css";
 
 const Login = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName }) => {
@@ -17,7 +16,7 @@ const Login = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName }) => {
       await axios.post("/api/login", { userId, password });
       setIsLogin(true);
       setLoginUserId(userId);
-      setDisplayName(userId);  // 일반 로그인: userId를 표시
+      setDisplayName(userId);
       navigate("/");
     } catch (err) {
       alert("로그인 실패");
@@ -25,52 +24,73 @@ const Login = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName }) => {
   };
 
   return (
-    <Container className="login-container">
-      <h2 className="login-title">로그인</h2>
-
-      <Form onSubmit={handleLogin} className="login-form">
-        <Form.Control
-          type="text"
-          placeholder="아이디"
-          onChange={(e) => setUserId(e.target.value)}
-        />
-
-        <Form.Control
-          type="password"
-          placeholder="비밀번호"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <Button type="submit" variant="success" className="login-btn">
-          로그인
-        </Button>
-      </Form>
-
-      <div className="social-divider">
-        <span>또는</span>
+    <div className="auth-container">
+      {/* 로고 */}
+      <div className="auth-logo" onClick={() => navigate("/")}>
+        <div className="logo-icon">
+          <i className="fa-solid fa-handshake-angle"></i>
+        </div>
+        <span>중고마켓</span>
       </div>
 
-      <div className="social-login">
-        <button
-          className="social-btn google-btn"
-          onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/google'}
-        >
-          <img src="https://www.google.com/favicon.ico" alt="Google" />
-          Google로 로그인
-        </button>
-        <button
-          className="social-btn naver-btn"
-          onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/naver'}
-        >
-          <img src="https://www.naver.com/favicon.ico" alt="Naver" />
-          네이버로 로그인
-        </button>
-      </div>
+      {/* 로그인 박스 */}
+      <div className="auth-box">
+        <h1 className="auth-title">로그인</h1>
+        <p className="auth-subtitle">중고마켓에서 안전한 거래를 시작해보세요</p>
 
-      <div className="login-link">
-        <Link to="/register">회원가입</Link>
+        <form onSubmit={handleLogin} className="auth-form">
+          <div className="input-group">
+            <i className="fa-regular fa-user"></i>
+            <input
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <i className="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button type="submit" className="auth-btn">
+            로그인
+          </button>
+        </form>
+
+        <div className="divider">
+          <span>또는</span>
+        </div>
+
+        <div className="social-buttons">
+          <button
+            className="social-btn google"
+            onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/google'}
+          >
+            <i className="fa-brands fa-google"></i>
+            Google 계정으로 로그인
+          </button>
+          <button
+            className="social-btn naver"
+            onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/naver'}
+          >
+            <span className="naver-icon">N</span>
+            네이버 계정으로 로그인
+          </button>
+        </div>
+
+        <div className="auth-footer">
+          <span>아직 계정이 없으신가요?</span>
+          <Link to="/register">회원가입</Link>
+        </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

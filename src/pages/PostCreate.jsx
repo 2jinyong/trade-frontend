@@ -1,13 +1,11 @@
 import React, { useState, useRef } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "../api/axios";
 import "../css/PostCreate.css";
 
 export default function PostCreate({ isLogin }) {
-  // 🔥 Hooks는 최상단
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [content, setContent] = useState("");
@@ -77,49 +75,95 @@ export default function PostCreate({ isLogin }) {
   };
 
   return (
-    <Container style={{ maxWidth: "860px", paddingTop: "28px" }}>
-      <h2 className="mb-4">판매글 작성</h2>
+    <div className="post-create-container">
+      {/* 상단 네비게이션 */}
+      <nav className="create-nav">
+        <div className="nav-inner">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <i className="fa-solid fa-arrow-left"></i>
+          </button>
+          <div className="nav-logo" onClick={() => navigate("/")}>
+            <div className="logo-icon">
+              <i className="fa-solid fa-handshake-angle"></i>
+            </div>
+            <span>중고마켓</span>
+          </div>
+          <div className="nav-right"></div>
+        </div>
+      </nav>
 
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>제목</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="제목을 입력하세요"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </Form.Group>
+      {/* 페이지 헤더 */}
+      <div className="create-header">
+        <h1>
+          <i className="fa-solid fa-tag"></i>
+          상품 등록
+        </h1>
+        <p>판매할 상품 정보를 입력해주세요</p>
+      </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>가격</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="가격을 입력하세요"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </Form.Group>
+      {/* 폼 영역 */}
+      <div className="create-form">
+        <div className="form-section">
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fa-solid fa-heading"></i>
+              제목
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="상품 제목을 입력해주세요"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
-        <Form.Group className="mb-4">
-          <Form.Label>내용</Form.Label>
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fa-solid fa-won-sign"></i>
+              가격
+            </label>
+            <div className="price-input-wrapper">
+              <input
+                type="number"
+                className="form-input"
+                placeholder="판매 가격을 입력해주세요"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              <span className="price-unit">원</span>
+            </div>
+          </div>
 
-          <ReactQuill
-            ref={quillRef}
-            key="quill-new"
-            value={content}
-            onChange={setContent}
-            modules={modules}
-            theme="snow"
-            className="quill-editor"
-            placeholder="내용을 입력하세요..."
-          />
-        </Form.Group>
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fa-solid fa-align-left"></i>
+              상품 설명
+            </label>
+            <ReactQuill
+              ref={quillRef}
+              key="quill-new"
+              value={content}
+              onChange={setContent}
+              modules={modules}
+              theme="snow"
+              className="quill-editor"
+              placeholder="상품에 대해 자세히 설명해주세요. 사진을 추가하면 더 좋아요!"
+            />
+          </div>
+        </div>
 
-        <Button variant="success" onClick={handleSubmit}>
-          등록하기
-        </Button>
-      </Form>
-    </Container>
+        {/* 하단 버튼 */}
+        <div className="form-actions">
+          <button className="cancel-btn" onClick={() => navigate("/")}>
+            취소
+          </button>
+          <button className="submit-btn" onClick={handleSubmit}>
+            <i className="fa-solid fa-check"></i>
+            등록하기
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

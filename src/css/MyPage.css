@@ -1,117 +1,630 @@
-.mypage-wrap {
-  padding-top: 28px;
-  max-width: 900px;
+/* ========================================
+   띵굴마켓 - MyPage
+   메인 컬러: #6366f1 (인디고), #8b5cf6 (퍼플)
+   ======================================== */
+
+* {
+  box-sizing: border-box;
 }
 
-.back-btn {
-  margin-bottom: 20px;
+.mypage-container {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding-bottom: 80px;
 }
 
-.mypage-header {
+/* ========================================
+   상단 네비게이션
+   ======================================== */
+.mypage-nav {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  z-index: 100;
+}
+
+.mypage-nav .nav-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mypage-nav .back-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 12px;
+  font-size: 18px;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.mypage-nav .back-btn:hover {
+  background: #e2e8f0;
+  color: #6366f1;
+}
+
+.mypage-nav .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.mypage-nav .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+}
+
+.mypage-nav .nav-right {
+  width: 42px;
+}
+
+/* ========================================
+   프로필 섹션
+   ======================================== */
+.profile-section {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-card {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 24px;
+  padding: 32px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+}
+
+.profile-avatar {
+  width: 88px;
+  height: 88px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.profile-info {
+  text-align: center;
   margin-bottom: 24px;
 }
 
-.mypage-header h2 {
-  font-weight: 600;
+.profile-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
 }
 
-.user-info-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
+.profile-id {
+  font-size: 14px;
+  opacity: 0.8;
+  margin: 0;
 }
 
-.user-info {
+.profile-stats {
   display: flex;
   align-items: center;
+  gap: 32px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 20px 40px;
+}
+
+.profile-stats .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.profile-stats .stat-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.profile-stats .stat-label {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.profile-stats .stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========================================
+   지갑 카드
+   ======================================== */
+.wallet-card {
+  max-width: 1024px;
+  margin: 0 auto 20px;
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (min-width: 1064px) {
+  .wallet-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.wallet-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wallet-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.wallet-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wallet-label {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.wallet-balance {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.wallet-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wallet-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wallet-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.wallet-arrow {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+/* ========================================
+   탭 네비게이션
+   ======================================== */
+.tab-nav {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.tab-btn i {
+  font-size: 16px;
+}
+
+/* ========================================
+   메인 컨텐츠
+   ======================================== */
+.mypage-content {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.section-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header h3 i {
+  color: #6366f1;
+}
+
+.section-header .item-count {
+  font-size: 14px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ========================================
+   상품 그리드
+   ======================================== */
+.mypage-content .products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
-.user-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #03c75a;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 600;
+@media (max-width: 900px) {
+  .mypage-content .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
 }
 
-.user-details h4 {
-  margin-bottom: 4px;
-  font-weight: 600;
+@media (max-width: 640px) {
+  .mypage-content .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }
 
-.user-details p {
-  margin: 0;
-  color: #666;
-  font-size: 14px;
-}
-
-.no-posts {
-  color: #999;
-  text-align: center;
-  padding: 40px 0;
-}
-
-.mypage-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+/* 상품 카드 */
+.mypage-content .product-card {
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.mypage-card:hover {
-  border-color: #03c75a;
-}
-
-.mypage-card .card-img-box {
-  height: 140px;
-  background: #f4f4f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mypage-card .card-img-box img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-.mypage-card .no-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: #f5f5f5;
-}
-
-.mypage-card .no-image-icon {
-  font-size: 32px;
-  opacity: 0.3;
-}
-
-.mypage-card .card-title {
-  font-size: 15px;
-  margin-bottom: 4px;
-  white-space: nowrap;
+  transition: all 0.25s;
+  border-radius: 16px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.mypage-card .price {
-  color: #03c75a;
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 4px;
+.mypage-content .product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-.mypage-card .meta {
+.mypage-content .product-image {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.mypage-content .product-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.mypage-content .product-card:hover .product-image img {
+  transform: scale(1.08);
+}
+
+.mypage-content .like-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
   font-size: 12px;
-  color: #999;
-  margin: 0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mypage-content .like-badge i {
+  color: #f43f5e;
+  font-size: 11px;
+}
+
+.mypage-content .product-image .no-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.mypage-content .product-image .no-image i {
+  font-size: 36px;
+  color: #cbd5e1;
+}
+
+.mypage-content .product-info {
+  padding: 14px 6px;
+}
+
+.mypage-content .product-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mypage-content .product-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.mypage-content .product-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.mypage-content .product-meta .dot {
+  color: #cbd5e1;
+}
+
+/* ========================================
+   빈 상태
+   ======================================== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fff;
+  border-radius: 20px;
+  color: #94a3b8;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #cbd5e1;
+}
+
+.empty-state p {
+  font-size: 15px;
+  margin: 0 0 20px 0;
+}
+
+.empty-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.empty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+/* ========================================
+   하단 네비게이션 (모바일)
+   ======================================== */
+.mypage-container .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 16px 8px;
+  z-index: 100;
+}
+
+@media (max-width: 640px) {
+  .mypage-container .bottom-nav {
+    display: flex;
+  }
+
+  .mypage-container {
+    padding-bottom: 90px;
+  }
+
+  .profile-card {
+    padding: 24px 20px;
+  }
+
+  .profile-avatar {
+    width: 72px;
+    height: 72px;
+    font-size: 28px;
+  }
+
+  .profile-name {
+    font-size: 20px;
+  }
+
+  .profile-stats {
+    padding: 16px 24px;
+    gap: 24px;
+  }
+
+  .profile-stats .stat-value {
+    font-size: 20px;
+  }
+
+  .tab-nav {
+    padding: 0 16px;
+  }
+
+  .tab-btn {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .mypage-content {
+    padding: 0 16px;
+  }
+
+  .section-header {
+    padding: 16px 20px;
+  }
+}
+
+.mypage-container .bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 11px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.mypage-container .bottom-nav-item i {
+  font-size: 22px;
+}
+
+.mypage-container .bottom-nav-item span {
+  font-weight: 500;
+}
+
+.mypage-container .bottom-nav-item.active {
+  color: #6366f1;
+}
+
+.mypage-container .bottom-nav-item.write {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 16px;
+  color: #fff;
+  padding: 0;
+  margin-top: -20px;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.mypage-container .bottom-nav-item.write i {
+  font-size: 24px;
+}
+
+.mypage-container .bottom-nav-item.write:hover {
+  transform: scale(1.05);
 }

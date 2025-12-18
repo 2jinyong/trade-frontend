@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "../api/axios";
@@ -16,13 +15,25 @@ export default function PostEdit({ loginUserId }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // 유저 ID 비교 (소셜 로그인 고려)
+  const isSameUser = useCallback((userId1, userId2) => {
+    if (!userId1 || !userId2) return false;
+    // 정확한 비교를 위해 trim 및 소문자 변환
+    const id1 = String(userId1).trim().toLowerCase();
+    const id2 = String(userId2).trim().toLowerCase();
+    if (id1 === id2) return true;
+    // @ 앞부분만 비교 (소셜 로그인 대응)
+    const format = (name) => name.includes('@') ? name.split('@')[0] : name;
+    return format(id1) === format(id2);
+  }, []);
+
   // 기존 데이터 불러오기
   useEffect(() => {
     axios.get(`/api/posts/${id}`)
       .then((res) => {
         const post = res.data;
         // 작성자 확인
-        if (post.userId !== loginUserId) {
+        if (!isSameUser(post.userId, loginUserId)) {
           alert("수정 권한이 없습니다.");
           navigate("/");
           return;
@@ -36,7 +47,7 @@ export default function PostEdit({ loginUserId }) {
         alert("게시글을 불러올 수 없습니다.");
         navigate("/");
       });
-  }, [id, loginUserId, navigate]);
+  }, [id, loginUserId, navigate, isSameUser]);
 
   // 이미지 업로드 핸들러
   const imageHandler = () => {
@@ -102,57 +113,106 @@ export default function PostEdit({ loginUserId }) {
   };
 
   if (loading) {
-    return <div style={{ padding: 40 }}>로딩 중...</div>;
+    return (
+      <div className="post-create-container">
+        <div style={{ padding: 60, textAlign: 'center', color: '#64748b' }}>
+          <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: 32, marginBottom: 16 }}></i>
+          <p>로딩 중...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <Container style={{ maxWidth: "860px", paddingTop: "28px" }}>
-      <h2 className="mb-4">게시글 수정</h2>
-
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>제목</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="제목을 입력하세요"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>가격</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="가격을 입력하세요"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-4">
-          <Form.Label>내용</Form.Label>
-          <ReactQuill
-            ref={quillRef}
-            key="quill-edit"
-            value={content}
-            onChange={setContent}
-            modules={modules}
-            theme="snow"
-            className="quill-editor"
-            placeholder="내용을 입력하세요..."
-          />
-        </Form.Group>
-
-        <div className="d-flex gap-2">
-          <Button variant="secondary" onClick={() => navigate(-1)}>
-            취소
-          </Button>
-          <Button variant="success" onClick={handleSubmit}>
-            수정하기
-          </Button>
+    <div className="post-create-container">
+      {/* 상단 네비게이션 */}
+      <nav className="create-nav">
+        <div className="nav-inner">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <i className="fa-solid fa-arrow-left"></i>
+          </button>
+          <div className="nav-logo" onClick={() => navigate("/")}>
+            <div className="logo-icon">
+              <i className="fa-solid fa-handshake-angle"></i>
+            </div>
+            <span>중고마켓</span>
+          </div>
+          <div className="nav-right"></div>
         </div>
-      </Form>
-    </Container>
+      </nav>
+
+      {/* 페이지 헤더 */}
+      <div className="create-header">
+        <h1>
+          <i className="fa-solid fa-pen"></i>
+          상품 수정
+        </h1>
+        <p>상품 정보를 수정해주세요</p>
+      </div>
+
+      {/* 폼 영역 */}
+      <div className="create-form">
+        <div className="form-section">
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fa-solid fa-heading"></i>
+              제목
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="상품 제목을 입력해주세요"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fa-solid fa-won-sign"></i>
+              가격
+            </label>
+            <div className="price-input-wrapper">
+              <input
+                type="number"
+                className="form-input"
+                placeholder="판매 가격을 입력해주세요"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              <span className="price-unit">원</span>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fa-solid fa-align-left"></i>
+              상품 설명
+            </label>
+            <ReactQuill
+              ref={quillRef}
+              key="quill-edit"
+              value={content}
+              onChange={setContent}
+              modules={modules}
+              theme="snow"
+              className="quill-editor"
+              placeholder="상품에 대해 자세히 설명해주세요. 사진을 추가하면 더 좋아요!"
+            />
+          </div>
+        </div>
+
+        {/* 하단 버튼 */}
+        <div className="form-actions">
+          <button className="cancel-btn" onClick={() => navigate(-1)}>
+            취소
+          </button>
+          <button className="submit-btn" onClick={handleSubmit}>
+            <i className="fa-solid fa-check"></i>
+            수정하기
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

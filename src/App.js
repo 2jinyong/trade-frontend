@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, replace } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -8,6 +8,12 @@ import axios from "./api/axios";
 import PostDetail from "./pages/PostDetail";
 import PostEdit from "./pages/PostEdit";
 import MyPage from "./pages/MyPage";
+import ChatList from "./pages/ChatList";
+import ChatRoom from "./pages/ChatRoom";
+import Wallet from "./pages/Wallet";
+import Charge from "./pages/Charge";
+import ChargeSuccess from "./pages/ChargeSuccess";
+import ChargeFail from "./pages/ChargeFail";
 
 function App() {
   const [isLogin, setIsLogin] = useState(null);
@@ -95,6 +101,30 @@ function App() {
         <Route
           path="/mypage"
           element={isLogin ? <MyPage loginUserId={loginUserId} displayName={displayName} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/chat"
+          element={isLogin ? <ChatList loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/chat/:roomId"
+          element={isLogin ? <ChatRoom loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/wallet"
+          element={isLogin ? <Wallet loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/wallet/charge"
+          element={isLogin ? <Charge loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/wallet/charge/success"
+          element={isLogin ? <ChargeSuccess /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/wallet/charge/fail"
+          element={isLogin ? <ChargeFail /> : <Navigate to="/login" replace />}
         />
       </Routes>
     </BrowserRouter>

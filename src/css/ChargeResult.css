@@ -1,0 +1,168 @@
+/* ========================================
+   충전 결과 페이지
+   ======================================== */
+
+.charge-result-container {
+  min-height: 100vh;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.result-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 48px 32px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.result-card.loading {
+  padding: 60px 32px;
+}
+
+/* 로딩 스피너 */
+.loading-spinner {
+  font-size: 48px;
+  color: #6366f1;
+  margin-bottom: 24px;
+}
+
+/* 결과 아이콘 */
+.result-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+}
+
+.result-icon.success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.result-icon.error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+}
+
+/* 제목 */
+.result-card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+}
+
+/* 메시지 */
+.success-message,
+.error-message {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+}
+
+.error-code {
+  font-size: 13px;
+  color: #94a3b8;
+  background: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+/* 결과 상세 */
+.result-details {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.detail-row:not(:last-child) {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-row .label {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.detail-row .value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.detail-row .value.order-id {
+  font-size: 12px;
+  font-family: monospace;
+  color: #64748b;
+}
+
+/* 버튼 */
+.result-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.action-btn.secondary {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.action-btn.secondary:hover {
+  background: #e2e8f0;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 480px) {
+  .result-card {
+    padding: 40px 24px;
+    border-radius: 20px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+}
