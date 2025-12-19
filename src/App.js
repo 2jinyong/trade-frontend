@@ -14,6 +14,7 @@ import Wallet from "./pages/Wallet";
 import Charge from "./pages/Charge";
 import ChargeSuccess from "./pages/ChargeSuccess";
 import ChargeFail from "./pages/ChargeFail";
+import Withdraw from "./pages/Withdraw";
 
 function App() {
   const [isLogin, setIsLogin] = useState(null);
@@ -125,6 +126,10 @@ function App() {
         <Route
           path="/wallet/charge/fail"
           element={isLogin ? <ChargeFail /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/wallet/withdraw"
+          element={isLogin ? <Withdraw loginUserId={loginUserId} /> : <Navigate to="/login" replace />}
         />
       </Routes>
     </BrowserRouter>

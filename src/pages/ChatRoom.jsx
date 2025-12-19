@@ -14,6 +14,8 @@ export default function ChatRoom({ loginUserId }) {
   const [connected, setConnected] = useState(false);
   const [partnerName, setPartnerName] = useState("");
   const messagesEndRef = useRef(null);
+  const [showTransferModal, setShowTransferModal] = useState(false);
+  const [transferAmount, setTransferAmount] = useState("");
 
   // 소셜로그인 유저 아이디 포맷팅
   const formatDisplayName = (name) => {
@@ -123,6 +125,48 @@ export default function ChatRoom({ loginUserId }) {
     }
   };
 
+  // 송금하기
+  const handleTransfer = async () => {
+    const amount = Number(transferAmount);
+    if (!amount || amount <= 0) {
+      alert("송금할 금액을 입력해주세요.");
+      return;
+    }
+
+    if (!window.confirm(`${formatDisplayName(partnerName)}님께 ${amount.toLocaleString()}원을 송금하시겠습니까?`)) {
+      return;
+    }
+
+    try {
+      const res = await axios.post("/api/wallet/transfer", {
+        receiverUserId: partnerName,
+        amount: amount,
+      });
+
+      alert(`${amount.toLocaleString()}원을 송금했습니다.`);
+      setShowTransferModal(false);
+      setTransferAmount("");
+
+      // 송금 성공 시스템 메시지 전송
+      if (stompClient && connected) {
+        stompClient.publish({
+          destination: "/pub/chat/message",
+          headers: {
+            senderUserId: loginUserId,
+          },
+          body: JSON.stringify({
+            roomId: parseInt(roomId),
+            content: `${amount.toLocaleString()}원을 송금했습니다.`,
+            messageType: "TRANSFER",
+          }),
+        });
+      }
+    } catch (err) {
+      console.log("송금 실패:", err);
+      alert(err.response?.data?.error || "송금에 실패했습니다.");
+    }
+  };
+
   return (
     <div className="chat-room-container">
       {/* 상단 헤더 */}
@@ -142,6 +186,9 @@ export default function ChatRoom({ loginUserId }) {
               </span>
             </div>
           </div>
+          <button className="transfer-btn" onClick={() => setShowTransferModal(true)} title="송금하기">
+            <i className="fa-solid fa-money-bill-transfer"></i>
+          </button>
           <button className="leave-btn" onClick={handleLeaveRoom}>
             <i className="fa-solid fa-right-from-bracket"></i>
           </button>
@@ -161,7 +208,7 @@ export default function ChatRoom({ loginUserId }) {
         {messages.map((msg, index) => (
           <div
             key={msg.messageId || index}
-            className={`message ${msg.senderUserId === loginUserId ? 'mine' : 'other'}`}
+            className={`message ${msg.senderUserId === loginUserId ? 'mine' : 'other'} ${msg.messageType === 'TRANSFER' ? 'transfer' : ''}`}
           >
             {msg.senderUserId !== loginUserId && (
               <div className="message-avatar">
@@ -172,7 +219,10 @@ export default function ChatRoom({ loginUserId }) {
               {msg.senderUserId !== loginUserId && (
                 <span className="sender-name">{formatDisplayName(msg.senderUserId)}</span>
               )}
-              <div className="message-bubble">
+              <div className={`message-bubble ${msg.messageType === 'TRANSFER' ? 'transfer-bubble' : ''}`}>
+                {msg.messageType === 'TRANSFER' && (
+                  <i className="fa-solid fa-money-bill-transfer transfer-icon"></i>
+                )}
                 <p className="message-content">{msg.content}</p>
               </div>
               <span className="message-time">{formatTime(msg.createdAt)}</span>
@@ -197,6 +247,58 @@ export default function ChatRoom({ loginUserId }) {
           </button>
         </div>
       </form>
+
+      {/* 송금 모달 */}
+      {showTransferModal && (
+        <div className="modal-overlay" onClick={() => setShowTransferModal(false)}>
+          <div className="modal-content transfer-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>
+                <i className="fa-solid fa-money-bill-transfer"></i>
+                송금하기
+              </h3>
+              <button className="modal-close" onClick={() => setShowTransferModal(false)}>
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="transfer-recipient">
+                <label>받는 사람</label>
+                <div className="recipient-info">
+                  <div className="recipient-avatar">
+                    {formatDisplayName(partnerName)?.charAt(0)?.toUpperCase()}
+                  </div>
+                  <span className="recipient-name">{formatDisplayName(partnerName)}</span>
+                </div>
+              </div>
+              <div className="transfer-amount-input">
+                <label>송금 금액</label>
+                <div className="amount-input-wrapper">
+                  <input
+                    type="text"
+                    placeholder="금액을 입력하세요"
+                    value={transferAmount ? Number(transferAmount).toLocaleString() : ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      setTransferAmount(value);
+                    }}
+                  />
+                  <span className="unit">원</span>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="modal-btn cancel" onClick={() => setShowTransferModal(false)}>
+                취소
+              </button>
+              <button className="modal-btn confirm" onClick={handleTransfer}>
+                <i className="fa-solid fa-paper-plane"></i>
+                송금하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

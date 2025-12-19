@@ -141,7 +141,11 @@ export default function Charge({ loginUserId }) {
             <i className="fa-solid fa-arrow-left"></i>
           </button>
           <h1 className="nav-title">충전하기</h1>
-          <div className="nav-right"></div>
+          <div className="nav-right">
+            <button className="home-btn" onClick={() => navigate("/")}>
+              <i className="fa-solid fa-house"></i>
+            </button>
+          </div>
         </div>
       </nav>
 

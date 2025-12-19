@@ -98,7 +98,11 @@ export default function Wallet({ loginUserId }) {
             <i className="fa-solid fa-arrow-left"></i>
           </button>
           <h1 className="nav-title">내 지갑</h1>
-          <div className="nav-right"></div>
+          <div className="nav-right">
+            <button className="home-btn" onClick={() => navigate("/")}>
+              <i className="fa-solid fa-house"></i>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -116,10 +120,6 @@ export default function Wallet({ loginUserId }) {
           <button className="action-btn charge" onClick={() => navigate("/wallet/charge")}>
             <i className="fa-solid fa-plus"></i>
             <span>충전</span>
-          </button>
-          <button className="action-btn transfer" onClick={() => navigate("/wallet/transfer")}>
-            <i className="fa-solid fa-paper-plane"></i>
-            <span>송금</span>
           </button>
           <button className="action-btn withdraw" onClick={() => navigate("/wallet/withdraw")}>
             <i className="fa-solid fa-building-columns"></i>

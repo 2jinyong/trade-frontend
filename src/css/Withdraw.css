@@ -1,0 +1,323 @@
+/* ========================================
+   띵굴마켓 - Withdraw Page
+   메인 컬러: #6366f1 (인디고), #8b5cf6 (퍼플)
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+.withdraw-container {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding-bottom: 100px;
+}
+
+/* ========================================
+   상단 네비게이션
+   ======================================== */
+.withdraw-nav {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  z-index: 100;
+}
+
+.withdraw-nav .nav-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.withdraw-nav .back-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 12px;
+  font-size: 18px;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.withdraw-nav .back-btn:hover {
+  background: #e2e8f0;
+  color: #6366f1;
+}
+
+.withdraw-nav .nav-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.withdraw-nav .nav-right {
+  width: 42px;
+}
+
+.withdraw-nav .home-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 12px;
+  font-size: 18px;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.withdraw-nav .home-btn:hover {
+  background: #e2e8f0;
+  color: #6366f1;
+}
+
+/* ========================================
+   컨텐츠 영역
+   ======================================== */
+.withdraw-content {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 잔액 정보 */
+.balance-info {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+}
+
+.balance-info .label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.balance-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.balance-amount .amount {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.balance-amount .currency {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ========================================
+   출금 폼
+   ======================================== */
+.withdraw-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.form-select,
+.form-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 16px;
+  color: #1e293b;
+  background: #fff;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.form-select:focus,
+.form-input:focus {
+  border-color: #6366f1;
+  background: #fff;
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+.form-input::placeholder {
+  color: #cbd5e1;
+}
+
+.amount-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.amount-input-wrapper:focus-within {
+  border-color: #6366f1;
+}
+
+.amount-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+  outline: none;
+}
+
+.amount-input::placeholder {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.amount-input-wrapper .unit {
+  font-size: 16px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* ========================================
+   안내사항
+   ======================================== */
+.notice-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.notice-header i {
+  color: #6366f1;
+  font-size: 16px;
+}
+
+.notice-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notice-list li {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ========================================
+   출금 버튼
+   ======================================== */
+.withdraw-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  padding: 16px 20px;
+  z-index: 10;
+}
+
+.withdraw-btn {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.withdraw-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+
+.withdraw-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+  color: #94a3b8;
+}
+
+.withdraw-btn i {
+  font-size: 18px;
+}
+
+/* ========================================
+   반응형
+   ======================================== */
+@media (max-width: 640px) {
+  .withdraw-content {
+    padding: 20px 16px;
+  }
+
+  .balance-amount .amount {
+    font-size: 28px;
+  }
+
+  .withdraw-footer {
+    padding: 12px 16px;
+  }
+}
