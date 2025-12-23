@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npm uninstall:*)",
       "Bash(npm install:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(del /f \"c:\\\\jinyong\\\\project\\\\backend\\\\trade\\\\src\\\\main\\\\java\\\\com\\\\jinyong\\\\trade\\\\initializer\\\\AdminInitializer.java\")"
     ]
   }
 }

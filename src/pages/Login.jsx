@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import axios from "../api/axios";
+import axios, { API_URL } from "../api/axios";
 import "../css/Login.css";
 
 const Login = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName }) => {
@@ -71,14 +71,14 @@ const Login = ({ isLogin, setIsLogin, setLoginUserId, setDisplayName }) => {
         <div className="social-buttons">
           <button
             className="social-btn google"
-            onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/google'}
+            onClick={() => window.location.href = `${API_URL}/oauth2/authorization/google`}
           >
             <i className="fa-brands fa-google"></i>
             Google 계정으로 로그인
           </button>
           <button
             className="social-btn naver"
-            onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/naver'}
+            onClick={() => window.location.href = `${API_URL}/oauth2/authorization/naver`}
           >
             <span className="naver-icon">N</span>
             네이버 계정으로 로그인

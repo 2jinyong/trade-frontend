@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import axios from "../api/axios";
+import axios, { API_URL } from "../api/axios";
 import "../css/Chat.css";
 
 export default function ChatRoom({ loginUserId }) {
@@ -65,7 +65,7 @@ export default function ChatRoom({ loginUserId }) {
   // WebSocket 연결
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      webSocketFactory: () => new SockJS(`${API_URL}/ws`),
       connectHeaders: {
         senderUserId: loginUserId,
       },
